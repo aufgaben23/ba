@@ -1,0 +1,113 @@
+
+<template>
+  
+    <div id="buttons">
+      <button class="button" id="next_task" @click="next_task()">
+        <img src="../assets/new_task.png" /> 
+        <br> <span>Neue Aufgabe</span>
+      </button>
+  
+      
+      <button class="button" id="check" @click="check_answer()">
+          <img src="../assets/check.png" />
+          <br> <span> Antwort prüfen </span>
+      </button>
+  
+      <button class="button" id="restart" @click="reset()">
+          <img src="../assets/restart.png" />
+          <br> <span> Zurücksetzen </span>
+      </button>
+  
+      <button class="button" id="info" @click="info()">
+          <img src="../assets/help.png" />
+          <br> <span> Hilfe </span>
+      </button>
+      
+    </div>
+    
+    
+  </template>
+  
+  <script lang="ts">
+  import { defineComponent } from 'vue';
+  
+  export default defineComponent({
+    name: 'HelloWorld',
+    props: [
+      
+    ],
+    methods: {
+      reloadPage(){
+        location.reload()
+      },
+      next_task(){
+        this.$emit('next_task')
+      },
+      check_answer(){
+        this.$emit('check_answer')
+      },
+      reset(){
+        this.$emit('reset')
+      },
+      info(){
+        this.$emit('info')
+      }
+  
+    }
+  });
+  </script>
+  
+  <!-- Add "scoped" attribute to limit CSS to this component only -->
+  <style scoped>
+  #buttons {
+    display: flex;
+      align-items: center;
+      justify-content: center;
+
+  }
+    span {
+      font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+      font-weight: normal;
+    }
+  
+    img {
+      height: 30px;
+      width: auto;
+    }
+  
+    .button {
+      cursor: pointer;
+      min-height: 60px;
+      min-width: 60px;
+      background-color: #B799E1;
+      border-radius: 10px;
+      border: solid black;
+      border-width: thin;
+    }
+  
+    #picture {
+      width:50%; 
+      height: auto
+    }
+  
+    .button:hover {
+      box-shadow: 0 2px 4px 0 rgb(0 0 0 / 90%);
+    }
+  
+    #main_menu {
+      height: 80px;
+      width: 150px;
+      margin: 5px 13px 0 0;
+    }
+  
+    #next_task, #info, #check, #restart {
+      height: 70px;
+      width: 130px;
+      margin: 5px 8px 0 0;
+    } 
+  
+    router-link {
+      text-decoration: none; 
+      color: black;
+    }
+  </style>
