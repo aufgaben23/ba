@@ -5,7 +5,7 @@
     <Verifier :correctSolution="this.result == 'correct'" :ifincomplete="this.result == 'incomplete'"
       v-if="this.submitted" :tip="this.hint()" @close-verifier="this.submitted = false" />
 
-    <Header @seteasy="seteasy()" @sethard="sethard()" :task_number="'2'" :task_name="'Aufgabe 2'" :is_ex1="false"
+    <Header @seteasy="seteasy()" @setmiddle="setmiddle()" @sethard="sethard()" :task_number="'2'" :task_name="'Aufgabe 2'" :is_ex1="false"
       :is_ex2="true" :is_ex3="false" :lines=this.lines />
 
     <br>
@@ -100,8 +100,9 @@
         <output class="outputs" :id="'out' + i"> {{ secondnumber }} </output>
       </template>
     </div>
+    <br>
 
-
+    
     <Footer @next_task="reloadPage()" @check_answer="submitAnswer()" @reset="reset()" @info="info()" />
   </div>
 </template>
@@ -172,6 +173,11 @@ export default defineComponent({
       this.reloadPage();
 
     },
+    setmiddle() {
+      this.difficulty = 'middle';
+      this.reloadPage();
+
+    },
     sethard() {
       this.difficulty = 'hard'
       this.reloadPage();
@@ -196,8 +202,14 @@ export default defineComponent({
       //for smaller viewports restrict the first number up to 12, else the user has to scroll
       if (height >= 600 && height <= 1000) {
         if (this.difficulty == 'easy') {
+          this.number = this.getrandomnumber(5, 9);            //if small up to 12
+          this.secondnumber = this.getrandomnumber(3, 9);
+
+
+        }
+        else if (this.difficulty == 'middle') {             //fix
           this.number = this.getrandomnumber(5, 12);
-          this.secondnumber = this.getrandomnumber(3, 20);
+          this.secondnumber = this.getrandomnumber(10, 19);
 
 
         }
@@ -216,8 +228,14 @@ export default defineComponent({
         //if the screen is big enough
 
         if (this.difficulty == 'easy') {
+          this.number = this.getrandomnumber(5, 9);
+          this.secondnumber = this.getrandomnumber(3, 9);
+
+
+        }
+        else if (this.difficulty == 'middle') {       //fix
           this.number = this.getrandomnumber(5, 15);
-          this.secondnumber = this.getrandomnumber(3, 20);
+          this.secondnumber = this.getrandomnumber(10, 19);
 
 
         }
@@ -396,7 +414,7 @@ export default defineComponent({
 
                 LeaderLine.obj.pointAnchor(document.getElementById('plus1' + '' + j), { color: 'red', x: "50%", y: '90%' })
               );
-
+              
               this.lines.push(line);
               this.lines.push(secondline);
               //if there's a node hanging

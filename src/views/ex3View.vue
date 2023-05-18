@@ -5,7 +5,7 @@
     <Verifier :correctSolution="this.result == 'correct'" :ifincomplete="this.result == 'incomplete'"
       v-if="this.submitted" :tip="this.hint()" @close-verifier="this.submitted = false" />
 
-    <Header @seteasy="seteasy()" @sethard="sethard()" :task_number="'3'" :task_name="'Aufgabe 3'" :is_ex1="false"
+    <Header @seteasy="seteasy()" @setmiddle="setmiddle()" @sethard="sethard()" :task_number="'3'" :task_name="'Aufgabe 3'" :is_ex1="false"
       :is_ex2="false" :is_ex3="true" />
     <br>
 
@@ -19,6 +19,24 @@
     </p>
 
     <br>
+
+    <h2 class="description_tabelle" v-show="number != 0"> Vorbereitungstabelle </h2>
+
+    <div class="table" v-for="(n, i) in finalarr.length" v-bind:key="n">
+      <div class="container">
+        <h1 v-show="number != 0" class="containerchild"> {{ number }} * {{ finalarr[i] }} = &nbsp; </h1>
+
+        <input class="containersecondchild" v-show="number != 0" type="number"
+          :style="'--borderColor:' + bordercolorarrtable[i] + ';'" ref="inputs" :id="'table' + i"
+          v-model="tableValues[i]" />
+
+
+      </div>
+
+
+    </div>
+    <br>
+
     <div class="list">
       <template class="layout" v-for="(n, i) in number_arr.length + 1" v-bind:key="n">
         <div class="flex-container">
@@ -39,27 +57,13 @@
     </div>
     <span v-if="!smallscreen">
       <br>
-      <br>
+      
     </span>
 
     <br>
 
 
-    <div class="table" v-for="(n, i) in finalarr.length" v-bind:key="n">
-      <div class="container">
-        <h1 v-show="number != 0" class="containerchild"> {{ number }} * {{ finalarr[i] }} = &nbsp; </h1>
-
-        <input class="containersecondchild" v-show="number != 0" type="number"
-          :style="'--borderColor:' + bordercolorarrtable[i] + ';'" ref="inputs" :id="'table' + i"
-          v-model="tableValues[i]" />
-
-
-      </div>
-
-
-    </div>
-    <br><br>
-    <br>
+   
     <br>
 
 
@@ -91,8 +95,6 @@ export default defineComponent({
       secondnumber: 0,
       number_arr: [],
       result: "still false",
-      oneto16: [1, 2, 4, 8, 16],
-      oneto64: [1, 2, 4, 8, 16, 32, 64],
       bordercolorarr: ['black', 'black', 'black', 'black', 'black', 'black', 'black', 'black', 'black', 'black', 'black', 'black'],
       borderboolarr: [true, true, true, true, true, true, true, true, true, true, true, true],
       bordercolorarrtable: ['black', 'black', 'black', 'black', 'black', 'black', 'black', 'black', 'black', 'black', 'black', 'black'],
@@ -106,15 +108,18 @@ export default defineComponent({
 
     hint() { },
     seteasy() {
-      // if the dificulty is easy, since the largest number is 31, multiplication table only with the numbers up to 16 is needed
+      
       this.difficulty = 'easy';
-      this.finalarr = this.oneto16;
+      this.reloadPage();
+
+    },
+    setmiddle() {
+      this.difficulty = 'middle';             
       this.reloadPage();
 
     },
     sethard() {
       this.difficulty = 'hard'
-      this.finalarr = this.oneto64;
       this.reloadPage();
 
 
@@ -129,7 +134,7 @@ export default defineComponent({
     //takes the binary string and returns an array of powers of 2 corresponding to the 1s.
     getarrayofnumbers(string_onesandzeros) {
       var arr_onesandzeros = string_onesandzeros.split('');
-
+      
       var number_arr = [];
       var exp;
       for (var i = 0; i < arr_onesandzeros.length; i++) {
@@ -142,6 +147,17 @@ export default defineComponent({
       }
       return number_arr;
     },
+    getfinalarr(highestnum) {
+
+      var finalarr = [];
+      for( var i = 1;i<=highestnum  ; i*=2) {
+          // @ts-ignore 
+        finalarr.push(i);
+      }
+      this.finalarr = finalarr;
+      console.log('the final arr is now ' + this.finalarr);
+    }, 
+
     submitAnswer() {
       this.submitted = true;
       this.checkAnswer();
@@ -150,6 +166,12 @@ export default defineComponent({
 
 
       if (this.difficulty == 'easy') {
+        this.secondnumber = this.getrandomnumber(2, 8);
+
+        this.number = this.getrandomnumber(2, 9);
+
+      }
+      else if (this.difficulty == 'middle') {                   //fix
         this.secondnumber = this.getrandomnumber(2, 31);
 
         this.number = this.getrandomnumber(2, 20);
@@ -171,7 +193,9 @@ export default defineComponent({
       this.inputValues = [];
 
       this.number_arr = this.getarrayofnumbers(this.dec2bin(this.secondnumber));
-
+      console.log('the number arr is ' + this.number_arr);
+      var highest_num = this.number_arr[0];
+      this.getfinalarr(highest_num);
 
     },
     checkAnswer() {
@@ -221,7 +245,7 @@ export default defineComponent({
       //dont require all of the table to be completed, it it just a supplement
       for (var i = 0; i < this.tableValues.length; i++) {
 
-        if (this.tableValues[i] != this.oneto64[i] * this.number) {
+        if (this.tableValues[i] != this.finalarr[i] * this.number) {
           this.result = "false";
           this.borderboolarrtable[i] = false;
         }
@@ -282,8 +306,8 @@ export default defineComponent({
 
       this.inputValues[this.number_arr.length] = this.number * this.secondnumber;
 
-      for (var j = 0; j < this.oneto64.length; j++) {
-        this.tableValues[j] = this.oneto64[j] * this.number;
+      for (var j = 0; j < this.finalarr.length; j++) {
+        this.tableValues[j] = this.finalarr[j] * this.number;
 
       }
 
@@ -479,6 +503,21 @@ export default defineComponent({
 
 }
 
+.description_tabelle {
+font-size: 1.7em;
+margin-bottom: 20px;
+color: #E6DCF0;
+font-family: cursive;
+font-weight: bold;
+text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+margin-top: 10px;
+display: flex;
+align-items: center;
+justify-content: center;
+
+}
+
+
 @media screen and (min-height: 600px) and (max-height: 1000px) {
 
   .title {
@@ -489,6 +528,20 @@ export default defineComponent({
     text-shadow: -1px -1px 0 #3e3434, 1px -1px 0 #3e3434, -1px 1px 0 #3e3434, 1px 1px 0 #3e3434;
 
   }
+
+  .description_tabelle {
+font-size: 1.3em;
+margin-bottom: 20px;
+color: #E6DCF0;
+font-family: cursive;
+font-weight: bold;
+text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+margin-top: 10px;
+display: flex;
+align-items: center;
+justify-content: center;
+
+}
 
   .description {
 
@@ -521,11 +574,11 @@ export default defineComponent({
   #str12,
   #answer {
     border: 2px solid var(--borderColor);
-    width: 38px;
-    height: 38px;
+    width: 45px;
+    height: 45px;
     margin: 15px;
     text-align: center;
-    font-size: 17px;
+    font-size: 15px;
 
   }
 
@@ -534,23 +587,23 @@ export default defineComponent({
   #table2,
   #table3 {
     border: 2px solid var(--borderColor);
-    width: 38px;
-    height: 38px;
+    width: 45px;
+    height: 45px;
     margin: 15px;
     text-align: center;
-    font-size: 17px;
+    font-size: 15px;
   }
 
   #table4,
   #table5,
   #table6 {
     border: 2px solid var(--borderColor);
-    width: 38px;
-    height: 38px;
+    width: 45px;
+    height: 45px;
     margin: 15px;
     margin-left: 3px;
     text-align: center;
-    font-size: 17px;
+    font-size: 15px;
   }
 
 }

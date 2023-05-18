@@ -5,7 +5,7 @@
     <Verifier :correctSolution="this.result == 'korrekt'" :ifincomplete="this.result == 'incomplete'"
       v-if="this.submitted" :tip="this.hint()" @close-verifier="this.submitted = false" />
 
-    <Header @seteasy="seteasy()" @sethard="sethard()" :task_number="'1'" :task_name="'Aufgabe 1'" :is_ex1="true"
+    <Header @seteasy="seteasy()" @setmiddle="setmiddle()" @sethard="sethard()" :task_number="'1'" :task_name="'Aufgabe 1'" :is_ex1="true"
       :is_ex2="false" :is_ex3="false" :lines=this.lines />
 
     <br>
@@ -34,7 +34,7 @@
 
     <div class="secondlist">
       <template class="layout" v-for="(n, i) in test" v-bind:key="n">
-        <output class="outputs" :id="'out' + i"> {{ secondnumber }} </output>
+        <div class="outputs" :id="'out' + i"> {{ secondnumber }} </div>
       </template>
     </div>
 
@@ -97,16 +97,18 @@ export default defineComponent({
     seteasy() {
       
       this.difficulty = 'easy';
-      this.button_bg[0] = '#D6ABC8';
-      this.button_bg[1] = '#e6dcf0';
+      this.reloadPage();
+
+    },
+    setmiddle() {
+      
+      this.difficulty = 'middle';
       this.reloadPage();
 
     },
     sethard() {
 
       this.difficulty = 'hard'
-      this.button_bg[1] = '#D6ABC8';
-      this.button_bg[0] = '#e6dcf0';
       this.reloadPage();
 
 
@@ -123,17 +125,24 @@ export default defineComponent({
       //the two numbers to be multiplied are randomly generated in a range based on the selected difficulty
       if (this.difficulty == 'easy') {
         //  bordercolor arrs needs to change too if this.number is changed from 4,12 
-        this.secondnumber = this.getrandomnumber(1, 20);
+        this.secondnumber = this.getrandomnumber(1, 9);
 
-        this.number = this.getrandomnumber(4, 12);
+        this.number = this.getrandomnumber(4, 9);
+
+      }
+      else if (this.difficulty == 'middle') {       //fix
+        this.secondnumber = this.getrandomnumber(10, 29);
+
+        this.number = this.getrandomnumber(4, 11);
 
       }
       else if (this.difficulty == 'hard') {
-        this.secondnumber = this.getrandomnumber(20, 100);
+        this.secondnumber = this.getrandomnumber(30, 100);
 
-        this.number = this.getrandomnumber(4, 12);
+        this.number = this.getrandomnumber(4, 11);
 
       }
+      
       else { return; }
 
 
@@ -212,6 +221,7 @@ export default defineComponent({
 
               LeaderLine.obj.pointAnchor(document.getElementById('plus' + (i + 1)), { color: 'red', path: "arc", x: "-40%", y: '0' })
             );
+            
             this.lines.push(line);
 
 
@@ -225,6 +235,7 @@ export default defineComponent({
 
               LeaderLine.obj.pointAnchor(document.getElementById('plus' + 0), { color: 'red', path: "arc", x: "50 %", y: '100%' })
             );
+            
             this.lines.push(line);
           }
           for (let i = 2; i < this.test; i++) {
@@ -362,18 +373,40 @@ export default defineComponent({
 }
 
 .secondlist {
-
+display: flex;
+justify-content: center;
   margin: 100px;
+  margin-top: 50px;
+  margin-left: 0px;
   text-align: center;
 }
 
 .outputs {
   background-color: #F1935C;
   border: 2px solid black;
-  padding: 15px;
+  width: 55px;
+  height: 55px;
   margin: 40px;
+  margin-right: 53px;  
+  margin-left: 15 px;
+  text-align: center;
+
   border-radius: 0.15rem;
-  font-size: 17px;
+  font-size: 21px;
+  padding-top: 13px;
+}
+#out0{
+  margin-right: 40px;
+  margin-left: -127px;
+}
+#out1{
+  margin-right: 70px;
+  margin-left: 50px;
+
+}
+#out2{
+  margin-left: 30px;  
+
 }
 
 .list {
@@ -498,6 +531,42 @@ export default defineComponent({
 
 @media screen and (min-height: 600px) and (max-height: 1000px) {
 
+  .secondlist {
+display: flex;
+justify-content: center;
+  margin: 50px;
+  margin-right: 0px;
+  text-align: center;
+}
+
+.outputs {
+    background-color: #F1935C;
+    border: 2px solid black;
+    width: 50px;
+    height: 50px;
+    padding: 15px;
+    margin: 40px;
+    margin-bottom: 0px;
+    margin-top:10px;
+    margin-right: 45px;
+    margin-left: 30px;
+    border-radius: 0.15rem;
+    font-size: 18px;
+  }
+#out0{
+  margin-right: 40px;
+  margin-left: -230px;
+}
+#out1{
+  margin-right: 67px;
+  margin-left: 20px;
+
+}
+#out2{
+  margin-left: 15px;  
+
+}
+
   .title {
     color: #e8e2ed;
     font-family: cursive;
@@ -556,24 +625,9 @@ export default defineComponent({
     text-align: center;
   }
 
-  .outputs {
-    background-color: #F1935C;
-    border: 2px solid black;
-    width: 50px;
-    height: 50px;
-    padding: 15px;
-    margin: 40px;
-    margin-right: 20px;
-    border-radius: 0.15rem;
-    font-size: 15px;
-  }
+  
 
-  .secondlist {
 
-    margin: 50px;
-    margin-right: 0px;
-    text-align: center;
-  }
 
 
 }

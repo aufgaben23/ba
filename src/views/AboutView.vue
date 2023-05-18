@@ -27,7 +27,9 @@
         title="info" target="_blank">info</a>, &nbsp;
       <a href="https://thenounproject.com/icon/binary-tree-3365226/" title="binarytree" target="_blank">task 2</a>,  &nbsp;
       <a href="https://thenounproject.com/icon/egyptian-cat-1382816/" title="binarytree" target="_blank">easy level</a>,  &nbsp;
-      <a href="https://thenounproject.com/icon/egyptian-cat-1381575/" title="binarytree" target="_blank">hard level</a>
+      <a href="https://thenounproject.com/icon/egyptian-cat-1381575/" title="binarytree" target="_blank">hard level</a>,  &nbsp;
+      <a href="https://www.freepik.com/free-vector/egypt-pyramids-nile-river-dusk-desert_12900177.htm" title="binarytree" target="_blank"> background image</a>
+
     </div>
 
   </div> <br><br><br><br>
@@ -42,7 +44,7 @@ body {
 }
 
 .title {
-  font-size: 3em;
+  font-size: 2em;
   margin-left: 50px;
   display: flex;
   align-items: center;

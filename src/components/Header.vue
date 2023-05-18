@@ -7,7 +7,12 @@
       <br> <span class="button_text"> Leicht </span>
     </button>
 
-    <button class="button" :style="{ 'background-color': button_bg[1] }" id="next_task" @click="sethard()">
+    <button class="button" :style="{ 'background-color': button_bg[1] }" id="next_task" @click="setmiddle()">
+      <img src="../assets/middle.png" />
+      <br> <span class="button_text">Mittel</span>
+    </button>
+
+    <button class="button" :style="{ 'background-color': button_bg[2] }" id="next_task" @click="sethard()">
       <img src="../assets/hard.png" />
       <br> <span class="button_text">Schwer</span>
     </button>
@@ -15,14 +20,14 @@
     <router-link v-if="is_ex1" to="/ex2">
       <button @click=deletelines() v-if="is_ex1" class="button" id="next_task">
         <img class="next_img" src="../assets/next.png" />
-        <br> <span class="button_text"> Zur Aufgabe Typ 2 </span>
+        <br> <span class="button_text"> Zur Aufgabe 2 </span>
       </button>
     </router-link>
 
     <router-link v-else-if="is_ex2" to="/ex3">
       <button @click=deletelines() v-if="is_ex2" class="button" id="next_task">
         <img class="next_img" src="../assets/next.png" />
-        <br> <span class="button_text"> Zur Aufgabe Typ 3 </span>
+        <br> <span class="button_text"> Zur Aufgabe 3 </span>
       </button>
     </router-link>
 
@@ -43,7 +48,7 @@ import { defineComponent } from 'vue';
 
 export default defineComponent({
   name: 'HelloWorld',
-  emits: ["seteasy", "sethard"],
+  emits: ["seteasy", "setmiddle","sethard"],
   props: [
     'task_number',
     'task_name',
@@ -53,18 +58,26 @@ export default defineComponent({
     "lines"
 
   ], data() {
-    return { button_bg: ['#e6dcf0', '#e6dcf0'] }
+    return { button_bg: ['#e6dcf0', '#e6dcf0', '#e6dcf0'] }
   },
 
   methods: {
     seteasy() {
       this.button_bg[0] = '#abd6ba';
       this.button_bg[1] = '#e6dcf0';
+      this.button_bg[2] = '#e6dcf0';
       this.$emit('seteasy');
     },
-    sethard() {
-      this.button_bg[1] = '#abd6ba';
+    setmiddle() {
       this.button_bg[0] = '#e6dcf0';
+      this.button_bg[1] = '#abd6ba';
+      this.button_bg[2] = '#e6dcf0';
+      this.$emit('setmiddle');
+    },
+    sethard() {
+      this.button_bg[0] = '#e6dcf0';
+      this.button_bg[1] = '#e6dcf0';
+      this.button_bg[2] = '#abd6ba';
       this.$emit('sethard');
     },
 
