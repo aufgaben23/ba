@@ -205,7 +205,7 @@ export default defineComponent({
 
       }
       else if (this.difficulty == 'hard') {
-        this.secondnumber = this.getrandomnumber(11, 9);
+        this.secondnumber = this.getrandomnumber(7, 9);
 
         this.number = this.getrandomnumber(4, 6);
 
