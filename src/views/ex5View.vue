@@ -5,8 +5,8 @@
     <Verifier :correctSolution="this.result == 'correct'" :ifincomplete="this.result == 'incomplete'"
       v-if="this.submitted" :tip="this.hint()" @close-verifier="this.submitted = false" />
 
-    <Header @seteasy="seteasy()" @setmiddle="setmiddle()" @sethard="sethard()" :task_number="'2'" :task_name="'Aufgabe 2'" :is_ex1="false"
-      :is_ex2="true" :is_ex3="false" :is_ex4="false" :is_ex5="false" :is_ex6="false" :lines=this.lines />
+    <Header @seteasy="seteasy()"  @sethard="sethard()" :task_number="'2'" :task_name="'Aufgabe 5'" :is_ex1="false"
+      :is_ex2="false" :is_ex3="false" :is_ex4="false" :is_ex5="true" :is_ex6="false" :lines=this.lines />
 
     <br>
 
@@ -15,7 +15,7 @@
     </p>
 
     <p id="the_task" v-show="number != 0">
-    <h1 class="title"> Finde das Produkt von {{ number }} und {{ secondnumber }} </h1>
+    <h1 class="title"> Finde {{ secondnumber }}&thinsp;<sup>{{ number }}</sup> </h1>
 
     </p>
 
@@ -28,7 +28,7 @@
           <input v-if="i >= levelquotient[5] || levelquotient[5] < 2" type="number"
             :style="'--borderColor:' + bordercolorarr5[i] + ';'" ref="inputs" :id="'str5' + i"
             v-model="inputValues5[i]" />
-          <h1 v-if="n != number && n != (number + 1)" :id="'plus5' + i" class="flex-child magenta"> + </h1>
+          <h1 v-if="n != number && n != (number + 1)" :id="'plus5' + i" class="flex-child magenta"> * </h1>
         </div>
       </template>
     </div>
@@ -42,7 +42,7 @@
           <input v-if="i >= levelquotient[4] || levelquotient[4] < 2" type="number"
             :style="'--borderColor:' + bordercolorarr4[i] + ';'" ref="inputs" :id="'str4' + i"
             v-model="inputValues4[i]" />
-          <h1 v-if="n != number && n != (number + 1)" :id="'plus4' + i" class="flex-child magenta"> + </h1>
+          <h1 v-if="n != number && n != (number + 1)" :id="'plus4' + i" class="flex-child magenta"> * </h1>
         </div>
       </template>
     </div>
@@ -56,7 +56,7 @@
           <input v-if="i >= levelquotient[3] || levelquotient[3] < 2" type="number"
             :style="'--borderColor:' + bordercolorarr3[i] + ';'" ref="inputs" :id="'str3' + i"
             v-model="inputValues3[i]" />
-          <h1 v-if="n != number && n != (number + 1)" :id="'plus3' + i" class="flex-child magenta"> + </h1>
+          <h1 v-if="n != number && n != (number + 1)" :id="'plus3' + i" class="flex-child magenta"> * </h1>
         </div>
       </template>
     </div>
@@ -71,7 +71,7 @@
           <input v-if="i >= levelquotient[2] || levelquotient[2] < 2" type="number"
             :style="'--borderColor:' + bordercolorarr2[i] + ';'" ref="inputs" :id="'str2' + i"
             v-model="inputValues2[i]" />
-          <h1 v-if="n != number && n != (number + 1)" :id="'plus2' + i" class="flex-child magenta"> + </h1>
+          <h1 v-if="n != number && n != (number + 1)" :id="'plus2' + i" class="flex-child magenta"> * </h1>
 
         </div>
       </template>
@@ -87,7 +87,7 @@
           <input v-if="i >= levelquotient[1] || levelquotient[1] < 2" type="number"
             :style="'--borderColor:' + bordercolorarr1[i] + ';'" class="flex-childgreen" ref="inputs" :id="'str1' + i"
             v-model="inputValues1[i]" />
-          <h1 v-if="n != number && n != (number + 1)" :id="'plus1' + i" class="flex-child magenta"> + </h1>
+          <h1 v-if="n != number && n != (number + 1)" :id="'plus1' + i" class="flex-child magenta"> * </h1>
         </div>
 
       </template>
@@ -173,11 +173,7 @@ export default defineComponent({
       this.reloadPage();
 
     },
-    setmiddle() {
-      this.difficulty = 'middle';
-      this.reloadPage();
-
-    },
+    
     sethard() {
       this.difficulty = 'hard'
       this.reloadPage();
@@ -202,52 +198,42 @@ export default defineComponent({
       //for smaller viewports restrict the first number up to 12, else the user has to scroll
       if (height >= 600 && height <= 1000) {
         if (this.difficulty == 'easy') {
-          this.number = this.getrandomnumber(5, 9);            //if small up to 12
-          this.secondnumber = this.getrandomnumber(3, 9);
+        //  bordercolor arrs needs to change too if this.number is changed from 4,12 
+        this.secondnumber = this.getrandomnumber(2, 6);
 
+        this.number = this.getrandomnumber(4, 7);
 
-        }
-        else if (this.difficulty == 'middle') {             //fix
-          this.number = this.getrandomnumber(5, 12);
-          this.secondnumber = this.getrandomnumber(10, 19);
+      }
+      else if (this.difficulty == 'hard') {
+        this.secondnumber = this.getrandomnumber(11, 9);
 
+        this.number = this.getrandomnumber(4, 6);
 
-        }
-        else if (this.difficulty == 'hard') {
-          this.number = this.getrandomnumber(5, 12);
-          this.secondnumber = this.getrandomnumber(20, 50);
+      }
+      
+      else { return; }
 
-
-        }
-        else {
-          return;
-        }
 
       }
       else {
         //if the screen is big enough
 
         if (this.difficulty == 'easy') {
-          this.number = this.getrandomnumber(5, 9);
-          this.secondnumber = this.getrandomnumber(3, 9);
+        //  bordercolor arrs needs to change too if this.number is changed from 4,12 
+        this.secondnumber = this.getrandomnumber(2, 6);
 
+        this.number = this.getrandomnumber(4, 7);
 
-        }
-        else if (this.difficulty == 'middle') {       //fix
-          this.number = this.getrandomnumber(5, 15);
-          this.secondnumber = this.getrandomnumber(10, 19);
+      }
+      else if (this.difficulty == 'hard') {
+        this.secondnumber = this.getrandomnumber(7, 9);
 
+        this.number = this.getrandomnumber(4, 6);
 
-        }
-        else if (this.difficulty == 'hard') {
-          this.number = this.getrandomnumber(5, 15);
-          this.secondnumber = this.getrandomnumber(20, 50);
+      }
+      
+      else { return; }
 
-
-        }
-        else {
-          return;
-        }
 
       }
 
@@ -414,7 +400,10 @@ export default defineComponent({
 
                 LeaderLine.obj.pointAnchor(document.getElementById('plus1' + '' + j), { color: 'red', x: "50%", y: '90%' })
               );
-              
+                // @ts-ignore 
+                secondline.path = "straight";
+                  // @ts-ignore 
+                line.path = "straight";
               this.lines.push(line);
               this.lines.push(secondline);
               //if there's a node hanging
@@ -448,6 +437,9 @@ export default defineComponent({
 
                     LeaderLine.obj.pointAnchor(document.getElementById('plus' + (i + 1) + '' + j), { color: 'red', x: "50%", y: '85%', path: "arc" })
                   );
+                  // @ts-ignore 
+                  line.path = "straight";
+
                   this.lines.push(line);
 
                 }
@@ -461,11 +453,8 @@ export default defineComponent({
                     LeaderLine.obj.pointAnchor(document.getElementById('plus' + (i + 1) + '' + j), { color: 'red', x: "0%", y: '-15%', path: "arc" })
                   );
 
-
-                  // @ts-ignore 
-
-
-                  line.color = "green";
+                     // @ts-ignore 
+                  line.path = "straight";
                   this.lines.push(line);
 
                 }
@@ -481,6 +470,8 @@ export default defineComponent({
 
                     LeaderLine.obj.pointAnchor(document.getElementById('plus' + (i + 1) + '' + j), { color: 'red', x: "50%", y: '85%', path: "arc" })
                   );
+                  // @ts-ignore 
+                  line.path = "straight";
                   this.lines.push(line);
 
 
@@ -493,6 +484,8 @@ export default defineComponent({
 
                     LeaderLine.obj.pointAnchor(document.getElementById('plus' + (i + 1) + '' + j), { color: 'red', x: "50%", y: '85%', path: "arc" })
                   );
+                  // @ts-ignore 
+                  line.path = "straight";
                   this.lines.push(line);
 
                 }
@@ -506,10 +499,12 @@ export default defineComponent({
                   LeaderLine.obj.pointAnchor(document.getElementById(leftnode.pop()), { x: "50%", y: '0%' }),
                   // @ts-ignore 
 
-                  LeaderLine.obj.pointAnchor(document.getElementById('plus' + (i + 1) + '' + j), { color: 'red', x: "50%", y: '85%', path: "arc" })
+                  LeaderLine.obj.pointAnchor(document.getElementById('plus' + (i + 1) + '' + j), { color: 'red', x: "90%", y: '80%', path: "arc" })
 
                 );
-
+                  // @ts-ignore 
+                secondline.path = "straight";
+                  //green
                 this.lines.push(secondline);
 
 
@@ -526,6 +521,8 @@ export default defineComponent({
 
                       LeaderLine.obj.pointAnchor(document.getElementById('plus' + (i + 1) + '' + j), { color: 'red', x: "50%", y: '85%', path: "arc" })
                     );
+                    // @ts-ignore 
+                  secondline.path = "straight";
                     this.lines.push(secondline);
 
 
@@ -556,6 +553,8 @@ export default defineComponent({
 
                       LeaderLine.obj.pointAnchor(document.getElementById('plus' + (i + 1) + '' + j), { color: 'red', x: "50%", y: '85%', path: "arc" })
                     );
+                    // @ts-ignore 
+                  secondline.path = "straight";
                     this.lines.push(secondline);
 
 
@@ -570,7 +569,8 @@ export default defineComponent({
                       LeaderLine.obj.pointAnchor(document.getElementById('plus' + (i + 1) + '' + j), { color: 'red', x: "50%", y: '85%', path: "arc" })
                     );
 
-
+                    // @ts-ignore 
+                  secondline.path = "straight";
                     this.lines.push(secondline);
 
                   }
@@ -661,6 +661,7 @@ export default defineComponent({
         var mult = firstn * secondn;
 
         var leftover: number[] = [];
+        var multi = secondn;
 
         var smallest = 2 * secondn;
         var nodehanging = false;
@@ -668,6 +669,8 @@ export default defineComponent({
         //if odd 
         if (firstn % 2 != 0) {
           nodehanging = true;
+          
+
         }
         var changeit = false;
 
@@ -691,7 +694,7 @@ export default defineComponent({
           }
           //the top
           if (smallest >= mult) {
-            if (this["inputValues" + i][0] != mult) {
+            if (this["inputValues" + i][0] != Math.pow(secondn,firstn)) {
               //set i0 to false;
               this["borderboolarr" + i][0] = 'false';
               this.result = 'false';
@@ -713,7 +716,7 @@ export default defineComponent({
                 return;
               }
 
-              if (this.quotientValues[i] != ((mult - remainder) / quotient)) {
+              if (this.quotientValues[i] != Math.pow(secondn,(i)*2)) {            //here
                 this.result = 'false';
                 this.borderboolarrquo[i] = 'false';
               }
@@ -725,7 +728,7 @@ export default defineComponent({
                 return;
               }
 
-              if (this["inputValues" + i][k] != ((mult - remainder) / quotient)) {
+              if (this["inputValues" + i][k] != Math.pow(secondn,(i)*2)) {
                 this["borderboolarr" + i][k] = 'false';
                 this.result = 'false';
               }
@@ -741,7 +744,7 @@ export default defineComponent({
               return;
             }
 
-            if (this["inputValues" + i][quotient] != remainder) {
+            if (this["inputValues" + i][quotient] != Math.pow(secondn,(i-1)*2)*multi) {
               this["borderboolarr" + i][quotient] = 'false';
               this.result = 'false';
 
@@ -775,7 +778,8 @@ export default defineComponent({
               }
 
 
-              if (this["inputValues" + i][quotient] != remainder) {
+              if (this["inputValues" + i][quotient] != Math.pow(secondn,(i)*2 +1)) {
+                console.log('is this executed ? ');
                 this["borderboolarr" + i][quotient] = 'false';
                 this.result = 'false';
 
@@ -791,7 +795,7 @@ export default defineComponent({
             if (nodehanging) {
               secondhanging = true;
             }
-            else nodehanging = true;
+            else {nodehanging = true; multi = Math.pow(secondn,(i) *2);}
           }
 
           if (nodehanging && secondhanging) {
@@ -916,6 +920,7 @@ export default defineComponent({
       var smallest = 2 * secondn;
       var nodehanging = false;
       var secondhanging = false;
+      var multi = secondn;
       //if odd 
       if (firstn % 2 != 0) {
         nodehanging = true;
@@ -932,7 +937,7 @@ export default defineComponent({
         //the top
         if (smallest >= mult) {
 
-          this["inputValues" + i][0] = mult;
+          this["inputValues" + i][0] = Math.pow(secondn,firstn);
 
           break;
         }
@@ -940,18 +945,21 @@ export default defineComponent({
 
         for (var k = 0; k < quotient; k++) {
           if (this.levelquotient[i] > k && this.levelquotient[i] > 1) {
-            this.quotientValues[i] = ((mult - remainder) / quotient);
+            this.quotientValues[i] =  Math.pow(secondn,(i)*2);
           }
           else {
 
-            this["inputValues" + i][k] = ((mult - remainder) / quotient);
+            this["inputValues" + i][k] = Math.pow(secondn,(i)*2);
+            console.log('here gets set Math.pow(secondn,(i*2))' + Math.pow(secondn,(i*2)) + 'for secondn  ' + secondn + 'and i = ' + i);
 
           }
         }
 
         if (changeit) {
 
-          this["inputValues" + i][quotient] = remainder;
+          this["inputValues" + i][quotient] = Math.pow(secondn,(i-1)*2)*multi;        //not for bigger numbers
+          console.log('here gets set Math.pow(secondn,(i-1)*2)*multi' + Math.pow(secondn,(i-1)*2)*multi + 'for secondn  ' + secondn + 'and i = ' + i);
+
           if (remainder != 0) {
             leftover.push(remainder);
 
@@ -969,7 +977,9 @@ export default defineComponent({
           }
 
           if (leftover.length > 1) {
-            this["inputValues" + i][quotient] = remainder;
+            this["inputValues" + i][quotient] = Math.pow(secondn,(i)*2 +1);       //is it executed?
+            console.log('is this executed ? ');
+
             leftover.shift();
           }
 
@@ -979,7 +989,7 @@ export default defineComponent({
           if (nodehanging) {
             secondhanging = true;
           }
-          else nodehanging = true;
+          else {nodehanging = true; multi = Math.pow(secondn,(i) *2);}
         }
 
         if (nodehanging && secondhanging) {
@@ -1084,6 +1094,8 @@ export default defineComponent({
   margin-top: 0px;
   color: #E6DCF0;
   text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+  font-size: 2em;
+  font-family:'Times New Roman', Times, serif;
 }
 
 .btn_difficulty {
@@ -1226,7 +1238,7 @@ export default defineComponent({
 #quo221,
 #quo224 {
   border: 3px solid var(--borderColor);
-  width: 55px;
+  width: 80px;
   height: 55px;
   margin: 40px;
   margin-bottom: 0px;
@@ -1341,6 +1353,18 @@ export default defineComponent({
 
 }
 
+#str10,
+#str11,
+#str12 {
+
+  border: 2px solid var(--borderColor);
+  width: 55px;
+  height: 55px;
+  margin: 40px;
+  margin-bottom: 0px;
+  text-align: center;
+  font-size: 17px;
+}
 #str20,
 #str21,
 #str22,
@@ -1363,7 +1387,7 @@ export default defineComponent({
 #str219,
 #str220 {
   border: 2px solid var(--borderColor);
-  width: 55px;
+  width: 80px;
   height: 55px;
   margin: 40px;
   margin-bottom: 0px;
@@ -1394,7 +1418,7 @@ export default defineComponent({
 #str319,
 #str320 {
   border: 2px solid var(--borderColor);
-  width: 55px;
+  width: 90px;
   height: 55px;
   margin: 40px;
   margin-bottom: 0px;
@@ -1533,7 +1557,7 @@ export default defineComponent({
   #quo221,
   #quo224 {
     border: 3px solid var(--borderColor);
-    width: 40px;
+    width: 80px;
     height: 40px;
     margin: 25px;
     margin-bottom: 0px;
@@ -1652,6 +1676,18 @@ export default defineComponent({
 
   }
 
+  #str10,
+  #str11,
+  #str12 {
+border: 2px solid var(--borderColor);
+    width: 40px;
+    height: 40px;
+    margin: 25px;
+    margin-bottom: 0px;
+    margin-top: 13px;
+    text-align: center;
+    font-size: 14px;
+}
   #str20,
   #str21,
   #str22,
@@ -1674,7 +1710,7 @@ export default defineComponent({
   #str219,
   #str220 {
     border: 2px solid var(--borderColor);
-    width: 40px;
+    width: 90px;
     height: 40px;
     margin: 25px;
     margin-bottom: 0px;
@@ -1706,7 +1742,7 @@ export default defineComponent({
   #str319,
   #str320 {
     border: 2px solid var(--borderColor);
-    width: 40px;
+    width: 90px;
     height: 40px;
     margin: 25px;
     margin-bottom: 0px;

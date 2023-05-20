@@ -5,8 +5,8 @@
     <Verifier :correctSolution="this.result == 'korrekt'" :ifincomplete="this.result == 'incomplete'"
       v-if="this.submitted" :tip="this.hint()" @close-verifier="this.submitted = false" />
 
-    <Header @seteasy="seteasy()" @setmiddle="setmiddle()" @sethard="sethard()" :task_number="'1'" :task_name="'Aufgabe 1'" :is_ex1="true"
-      :is_ex2="false" :is_ex3="false" :is_ex4="false" :is_ex5="false" :is_ex6="false" :lines=this.lines />
+    <Header @seteasy="seteasy()" @sethard="sethard()" :task_number="'1'" :task_name="'Aufgabe 4'" :is_ex1="false"
+      :is_ex2="false" :is_ex3="false" :is_ex4="true" :is_ex5="false" :is_ex6="false" :lines=this.lines />
 
     <br>
 
@@ -16,13 +16,13 @@
 
 
     <p id="the_task" v-show="number != 0">
-    <h1 class="description"> Finde das Produkt von {{ number }} und {{ secondnumber }} </h1>
+    <h1 class="description"> Finde {{ secondnumber }}&thinsp;<sup>{{ number }}</sup>  </h1>
     </p>
 
     <div class="list">
       <template class="layout" v-for="(n, i) in test1" v-bind:key="n">
         <div class="flex-container1">
-          <h1 v-if="n != number && n != (number + 1)" :id="'plus' + i" class="flex-childgreen"> + </h1>
+          <h1 v-if="n != number && n != (number + 1)" :id="'plus' + i" class="flex-childgreen"> * </h1>
 
           <input class="flex-child2" :style="'--borderColor:' + bordercolorarr[i] + ';'" type="number" ref="inputs"
             :id="'str' + i" v-model="inputValues[i]" />
@@ -100,12 +100,6 @@ export default defineComponent({
       this.reloadPage();
 
     },
-    setmiddle() {
-      
-      this.difficulty = 'middle';
-      this.reloadPage();
-
-    },
     sethard() {
 
       this.difficulty = 'hard'
@@ -125,21 +119,15 @@ export default defineComponent({
       //the two numbers to be multiplied are randomly generated in a range based on the selected difficulty
       if (this.difficulty == 'easy') {
         //  bordercolor arrs needs to change too if this.number is changed from 4,12 
-        this.secondnumber = this.getrandomnumber(1, 9);
+        this.secondnumber = this.getrandomnumber(2, 6);
 
-        this.number = this.getrandomnumber(4, 9);
-
-      }
-      else if (this.difficulty == 'middle') {       //fix
-        this.secondnumber = this.getrandomnumber(10, 29);
-
-        this.number = this.getrandomnumber(4, 11);
+        this.number = this.getrandomnumber(3, 7);
 
       }
       else if (this.difficulty == 'hard') {
-        this.secondnumber = this.getrandomnumber(30, 100);
+        this.secondnumber = this.getrandomnumber(6, 9);
 
-        this.number = this.getrandomnumber(4, 11);
+        this.number = this.getrandomnumber(3, 6);
 
       }
       
@@ -172,11 +160,10 @@ export default defineComponent({
               // @ts-ignore 
               LeaderLine.obj.pointAnchor(document.getElementById('str' + i), { color: 'red', path: "arc", x: "130%", y: '0' }),
               // @ts-ignore 
-
-              LeaderLine.obj.pointAnchor(document.getElementById('plus' + (i + 1)), { color: 'red', path: "arc", x: "30%", y: '0' })
-            );
-            //@ts-ignore
-            //line.color = 'red';
+              LeaderLine.obj.pointAnchor(document.getElementById('plus' + (i + 1)), { color: 'red', path: "arc", x: "-50%", y: '40%' })
+            );  
+            // @ts-ignore
+            line.path = "straight";
             this.lines.push(line);
 
 
@@ -219,9 +206,10 @@ export default defineComponent({
               LeaderLine.obj.pointAnchor(document.getElementById('str' + i), { color: 'red', path: "arc", x: "100%", y: '0' }),
               // @ts-ignore 
 
-              LeaderLine.obj.pointAnchor(document.getElementById('plus' + (i + 1)), { color: 'red', path: "arc", x: "-40%", y: '0' })
-            );
-            
+              LeaderLine.obj.pointAnchor(document.getElementById('plus' + (i + 1)), { color: 'red', path: "arc", x: "-50%", y: '40%' })
+            );  
+            // @ts-ignore
+            line.path = "straight";
             this.lines.push(line);
 
 
@@ -274,13 +262,13 @@ export default defineComponent({
           this.result = "incomplete";
           break;
         }
-        else if (inputs[i] != second * (i + 2)) {
+        else if (inputs[i] != Math.pow(second,(i + 2))) {
           this.result = "false";
 
           this.borderboolarr[i] = false;
           // break;
         }
-        else if (inputs[i] == second * (i + 2)) {
+        else if (inputs[i] == Math.pow(second,(i + 2))) {
 
           this.borderboolarr[i] = true;
         }
@@ -313,11 +301,11 @@ export default defineComponent({
         this.bordercolorarr[j] = 'black';
       }
 
-      var firstn = this.number;
-      var secondn = this.secondnumber;
+      var firstn = this.number;  //7
+      var secondn = this.secondnumber;  //2
       var init = secondn;
       for (var i = 0; i < firstn; i++) {
-        init += secondn;
+        init *= secondn;
         this.inputValues[i] = init;
       }
 
@@ -387,8 +375,8 @@ justify-content: center;
   width: 55px;
   height: 55px;
   margin: 40px;
-  margin-right: 53px;  
-  margin-left: 15 px;
+  margin-right: 60px;  
+  margin-left: 90px;
   text-align: center;
 
   border-radius: 0.15rem;
@@ -396,16 +384,16 @@ justify-content: center;
   padding-top: 13px;
 }
 #out0{
-  margin-right: 40px;
-  margin-left: -127px;
+  margin-right: 10px;
+  margin-left: -200px;
 }
 #out1{
-  margin-right: 70px;
-  margin-left: 50px;
+  margin-right: 82px;
+  margin-left: 102px;
 
 }
 #out2{
-  margin-left: 30px;  
+  margin-left: 128px;  
 
 }
 
@@ -444,8 +432,8 @@ justify-content: center;
 #str20,
 #str20 {
   border: 2px solid var(--borderColor);
-  width: 55px;
-  height: 55px;
+  width: 80px;
+  height: 60px;
   margin: 70px;
   margin-left: 5px;
   font-size: 17px;
@@ -453,13 +441,6 @@ justify-content: center;
   text-align: center;
 }
 
-.layout {
-  gap: 50px;
-}
-
-.grow1 {
-  flex-grow: 1;
-}
 
 
 .flex-container1 {
@@ -479,7 +460,12 @@ justify-content: center;
 .flex-childgreen {
   color: #E6DCF0;
   text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+  font-size: 2em;
+  font-family:'Times New Roman', Times, serif;
+  margin-left: 30px;
+  margin-bottom:14px;
 
+  margin-right:4px;
 }
 
 .flex-container {
@@ -491,43 +477,6 @@ justify-content: center;
   justify-content: center;
 }
 
-.btn_difficulty {
-
-  align-items: center;
-  text-align: center;
-  background: url('../assets/star.png') center no-repeat;
-  background-size: 100% 100%;
-  margin: 10px 10px 0 0;
-  cursor: pointer;
-  min-height: 60px;
-  min-width: 60px;
-  max-height: 60px;
-  max-width: 60px;
-  border-radius: 15px;
-  border: solid black;
-  border-width: thin;
-  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
-  size: 50px;
-}
-
-.btn_difficulty2 {
-
-  align-items: center;
-  text-align: center;
-  background: url('../assets/stars.png') center no-repeat;
-  background-size: 100% 100%;
-  margin: 10px 10px 0 0;
-  cursor: pointer;
-  min-height: 60px;
-  min-width: 60px;
-  max-height: 60px;
-  max-width: 60px;
-  border-radius: 15px;
-  border: solid black;
-  border-width: thin;
-  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
-  size: 50px;
-}
 
 @media screen and (min-height: 600px) and (max-height: 1000px) {
 
@@ -548,22 +497,22 @@ justify-content: center;
     margin: 40px;
     margin-bottom: 0px;
     margin-top:10px;
-    margin-right: 45px;
-    margin-left: 30px;
+    margin-right: 70px;
+    margin-left: 65px;
     border-radius: 0.15rem;
     font-size: 18px;
   }
 #out0{
-  margin-right: 40px;
-  margin-left: -230px;
+  margin-right: 60px;
+  margin-left: -240px;
 }
 #out1{
-  margin-right: 67px;
-  margin-left: 20px;
+  margin-right: 64px;
+  margin-left: 44px;
 
 }
 #out2{
-  margin-left: 15px;  
+  margin-left: 70px;  
 
 }
 
@@ -615,7 +564,7 @@ justify-content: center;
   #str20,
   #str20 {
     border: 2px solid var(--borderColor);
-    width: 50px;
+    width: 80px;
     height: 50px;
     margin: 70px;
     margin-left: 5px;

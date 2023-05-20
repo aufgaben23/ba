@@ -33,6 +33,21 @@ const router = createRouter({
       name: 'ex3',
       component: () => import('../views/ex3View.vue')
 
+    },
+    { path: '/ex4',
+      name: 'ex4',
+      component: () => import('../views/ex4View.vue')
+
+    },
+    { path: '/ex5',
+    name: 'ex5',
+    component: () => import('../views/ex5View.vue')
+
+    },
+    { path: '/ex6',
+    name: 'ex6',
+    component: () => import('../views/ex6View.vue')
+
     }
   ]
 })

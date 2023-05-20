@@ -7,7 +7,7 @@
       <br> <span class="button_text"> Leicht </span>
     </button>
 
-    <button class="button" :style="{ 'background-color': button_bg[1] }" id="next_task" @click="setmiddle()">
+    <button v-if="is_ex1||is_ex2||is_ex3" class="button" :style="{ 'background-color': button_bg[1] }" id="next_task" @click="setmiddle()">
       <img src="../assets/middle.png" />
       <br> <span class="button_text">Mittel</span>
     </button>
@@ -31,6 +31,26 @@
       </button>
     </router-link>
 
+    <router-link v-else-if="is_ex3" to="/ex4">
+      <button @click=deletelines() v-if="is_ex3" class="button" id="next_task">
+        <img class="next_img" src="../assets/next.png" />
+        <br> <span class="button_text"> Zur Aufgabe 4 </span>
+      </button>
+    </router-link>
+
+    <router-link v-else-if="is_ex4" to="/ex5">
+      <button @click=deletelines() v-if="is_ex4" class="button" id="next_task">
+        <img class="next_img" src="../assets/next.png" />
+        <br> <span class="button_text"> Zur Aufgabe 5 </span>
+      </button>
+    </router-link>
+
+    <router-link v-else-if="is_ex5" to="/ex6">
+      <button @click=deletelines() v-if="is_ex5" class="button" id="next_task">
+        <img class="next_img" src="../assets/next.png" />
+        <br> <span class="button_text"> Zur Aufgabe 6 </span>
+      </button>
+    </router-link>
 
     <router-link to="/" style="text-decoration: none; color: black">
       <button @click=deletelines() class="button" id="main_menu">
@@ -55,6 +75,9 @@ export default defineComponent({
     'is_ex1',
     'is_ex2',
     "is_ex3",
+    "is_ex4",
+    "is_ex5",
+    "is_ex6",
     "lines"
 
   ], data() {

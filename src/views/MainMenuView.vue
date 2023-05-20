@@ -17,7 +17,7 @@
     <br>
     <br>
 
-    <div id="tasks">
+    <div class="tasks">
 
       <router-link to="/ex1" style="text-decoration: none; color: black">
         <div class="card">
@@ -38,10 +38,30 @@
           <img class="ex_image" src="../assets/ex3_icon.png" />
         </div>
       </router-link>
-
-
+      <router-link to="/ex4" style="text-decoration: none; color: black">
+        <div class="card">
+          <h1> Aufgabe 4</h1>
+          <img class="ex_image4" src="../assets/ex4_icon.png" />
+        </div>
+      </router-link>
+    
     </div>
 
+    <div  class="tasks"> 
+      
+      <router-link to="/ex5" style="text-decoration: none; color: black">
+        <div class="card">
+          <h1> Aufgabe 5</h1>
+          <img class="ex_image5" src="../assets/ex5_icon.png" />
+        </div>
+      </router-link>
+      <router-link to="/ex6" style="text-decoration: none; color: black">
+        <div class="card">
+          <h1> Aufgabe 6</h1>
+          <img class="ex_image6" src="../assets/ex6_icon.png" />
+        </div>
+      </router-link>
+    </div>
 
 
 
@@ -109,7 +129,7 @@
   background-color: black;
 }
 
-#tasks {
+.tasks {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -160,5 +180,26 @@ img {
 .ex_image1 {
   width: 100%;
   height: auto;
+}
+.ex_image4 {
+  width: 102%;
+  height: auto;
+  margin-left:-10px;
+  margin-top: -2px;
+}
+.ex_image5 {
+  height: auto;
+  width: auto;
+  max-width: 137px;
+  max-height: 140px;
+  align-items: center;
+  margin-left: 85px;
+}
+.ex_image6 {
+  width: 66%;
+  height: auto;
+  align-items: center;
+margin-left:53px;
+margin-top:-4px;
 }
 </style>

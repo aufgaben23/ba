@@ -5,26 +5,26 @@
     <Verifier :correctSolution="this.result == 'correct'" :ifincomplete="this.result == 'incomplete'"
       v-if="this.submitted" :tip="this.hint()" @close-verifier="this.submitted = false" />
 
-    <Header @seteasy="seteasy()" @setmiddle="setmiddle()" @sethard="sethard()" :task_number="'3'" :task_name="'Aufgabe 3'" :is_ex1="false"
-      :is_ex2="false" :is_ex3="true" :is_ex4="false" :is_ex5="false" :is_ex6="false" />
+    <Header @seteasy="seteasy()" @sethard="sethard()" :task_number="'3'" :task_name="'Aufgabe 6'" :is_ex1="false"
+      :is_ex2="false" :is_ex3="false" :is_ex4="false" :is_ex5="false" :is_ex6="true"/>
     <br>
 
     <p id="warning" v-show="number == 0">
     <h2 class="title"> Wähle Schwierigkeitsgrad </h2>
     </p>
-    <br>
+
 
     <p id="the_task" v-show="number != 0">
-    <h1 class="description"> Finde das Produkt von {{ number }} und {{ secondnumber }} </h1>
+    <h1 class="description"> Finde {{ secondnumber }}&thinsp;<sup>{{ number }}</sup> </h1>
     </p>
 
-    <br>
 
     <h2 class="description_tabelle" v-show="number != 0"> Vorbereitungstabelle </h2>
 
     <div class="table" v-for="(n, i) in finalarr.length" v-bind:key="n">
       <div class="container">
-        <h1 v-show="number != 0" class="containerchild"> {{ number }} * {{ finalarr[i] }} = &nbsp; </h1>
+        <h1 v-show="number != 0" class="containerchild"> {{ secondnumber }}&thinsp;<sup>{{ finalarr[i] }}</sup>&thinsp; =&thinsp;</h1>
+
 
         <input class="containersecondchild" v-show="number != 0" type="number"
           :style="'--borderColor:' + bordercolorarrtable[i] + ';'" ref="inputs" :id="'table' + i"
@@ -36,24 +36,28 @@
 
     </div>
     <br>
-
+    <br> 
+    <br>
     <div class="list">
-      <template class="layout" v-for="(n, i) in number_arr.length + 1" v-bind:key="n">
+      <template class="layout" v-for="(n, i) in number_arr.length " v-bind:key="n">
         <div class="flex-container">
 
-          <h1 v-if="n == 1" v-show="number != 0" class="flex-childgreen"> {{ number }} * {{ secondnumber }} = {{ number }}
-            * (
-          </h1>
+          <h1 v-if="n == 1" v-show="number != 0" class="flex-childgreen"> {{ secondnumber }}  <sup>{{ number }}</sup> =  &nbsp;</h1>
 
-          <input class="flex-child magenta" v-show="number != 0" type="number"
-            :style="'--borderColor:' + bordercolorarr[i] + ';'" ref="inputs" :id="'str' + i" v-model="inputValues[i]" />
-          <h1 v-if="n != number_arr.length && n != (number_arr.length + 1)" class="flex-childgreen"> + </h1>
+          <h1 v-if="n != 0" v-show="number != 0" class="flex-childgreen"> {{ secondnumber }}</h1>
 
-          <h1 v-if="n == number_arr.length" class="flex-childgreen"> ) = <span> </span> </h1>
+           <input class="list-inputs" v-show="number != 0" type="number"
+            :style="'--borderColor:' + bordercolorarr[i] + ';'" ref="inputs" :id="'str' + i" v-model="inputValues[i]" /> 
+
+          <h1 v-if="n != number_arr.length && n != (number_arr.length + 1)" class="multi"> * &nbsp; </h1>
+
+          <h1 v-if="n == number_arr.length" class="flex-childgreen">  =  &nbsp; <span> </span> </h1>
+
         </div>
 
       </template>
-
+      <input class="list-inputs" v-show="number != 0" type="number"
+            :style="'--borderColor:' + bordercolorarr[number_arr.length] + ';'" ref="inputs" :id="'answer'"  v-model="inputValues[number_arr.length]" /> 
     </div>
     <span v-if="!smallscreen">
       <br>
@@ -113,11 +117,6 @@ export default defineComponent({
       this.reloadPage();
 
     },
-    setmiddle() {
-      this.difficulty = 'middle';             
-      this.reloadPage();
-
-    },
     sethard() {
       this.difficulty = 'hard'
       this.reloadPage();
@@ -164,25 +163,19 @@ export default defineComponent({
     },
     reloadPage() {
 
-
       if (this.difficulty == 'easy') {
-        this.secondnumber = this.getrandomnumber(2, 8);
+        this.secondnumber = this.getrandomnumber(2, 6);
 
-        this.number = this.getrandomnumber(2, 9);
-
-      }
-      else if (this.difficulty == 'middle') {                   //fix
-        this.secondnumber = this.getrandomnumber(2, 31);
-
-        this.number = this.getrandomnumber(2, 20);
+        this.number = this.getrandomnumber(3, 7);
 
       }
       else if (this.difficulty == 'hard') {
-        this.secondnumber = this.getrandomnumber(20, 127);
+        this.secondnumber = this.getrandomnumber(6, 11);
 
-        this.number = this.getrandomnumber(20, 100);
+        this.number = this.getrandomnumber(3, 6);
 
       }
+      
       else { return; }
 
       const height = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0);
@@ -192,7 +185,7 @@ export default defineComponent({
       this.tableValues = [];
       this.inputValues = [];
 
-      this.number_arr = this.getarrayofnumbers(this.dec2bin(this.secondnumber));
+      this.number_arr = this.getarrayofnumbers(this.dec2bin(this.number));
       console.log('the number arr is ' + this.number_arr);
       var highest_num = this.number_arr[0];
       this.getfinalarr(highest_num);
@@ -304,10 +297,10 @@ export default defineComponent({
 
       }
 
-      this.inputValues[this.number_arr.length] = this.number * this.secondnumber;
-
+      this.inputValues[this.number_arr.length] = Math.pow(this.secondnumber, this.number);
+      console.log('final answer ' + Math.pow(this.secondnumber, this.number));
       for (var j = 0; j < this.finalarr.length; j++) {
-        this.tableValues[j] = this.finalarr[j] * this.number;
+        this.tableValues[j] = Math.pow(this.secondnumber, this.finalarr[j]);
 
       }
 
@@ -332,55 +325,19 @@ export default defineComponent({
   margin-top: 26px;
 
 }
+.multi {
+  color: #E6DCF0;
+  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+  font-size: 2em;
+  font-family:'Times New Roman', Times, serif;
+  margin-left: 0px;
+  margin-bottom:14px;
 
-.btn_difficulty {
-
-  align-items: center;
-  text-align: center;
-  background: url('../assets/star.png') center no-repeat;
-  background-size: 100% 100%;
-  margin: 10px 10px 0 0;
-  cursor: pointer;
-  min-height: 60px;
-  min-width: 60px;
-  max-height: 60px;
-  max-width: 60px;
-  background-color: #e6dcf0;
-  border-radius: 15px;
-  border: solid black;
-  border-width: thin;
-  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
-  size: 50px;
+  margin-right:4px;
 }
 
-.btn_difficulty2 {
 
-  align-items: center;
-  text-align: center;
-  background: url('../assets/stars.png') center no-repeat;
-  background-size: 100% 100%;
-  margin: 10px 10px 0 0;
-  cursor: pointer;
-  min-height: 60px;
-  min-width: 60px;
-  max-height: 60px;
-  max-width: 60px;
-  background-color: #e6dcf0;
-  border-radius: 15px;
-  border: solid black;
-  border-width: thin;
-  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
-  size: 50px;
-}
 
-.flex-container-button {
-
-  align-items: center;
-  text-align: center;
-  display: flex;
-
-  justify-content: center;
-}
 
 .flex-childgreen,
 .containerchild {
@@ -401,7 +358,13 @@ export default defineComponent({
 
 }
 
-.flex-child,
+.list-inputs{
+  display : flex;
+  align-items: center;
+  text-align: center;
+  margin-right: 20px;
+}
+
 .containersecondchild {
 
   align-items: center;
@@ -416,12 +379,6 @@ export default defineComponent({
   display: flex;
 }
 
-.flex-child:first-child {
-
-  align-items: center;
-  text-align: center;
-  margin-right: 20px;
-}
 
 #str0,
 #str1,
@@ -436,16 +393,29 @@ export default defineComponent({
 #str9,
 #str10,
 #str11,
-#str12,
-#answer {
+#str12
+ {
   border: 2px solid var(--borderColor);
-  width: 52px;
-  height: 52px;
+  width: 45px;
+  height: 45px;
   margin: 15px;
   text-align: center;
   font-size: 17px;
+  margin-top: -40px;
+  padding-left: 5px;
 
 }
+
+#answer {
+  border: 2px solid var(--borderColor);
+  width: 90px;
+  height: 55px;
+  margin: 15px;
+  text-align: center;
+  font-size: 17px;
+  padding-left: 5px;
+}
+
 
 #table0,
 #table1,
@@ -457,6 +427,7 @@ export default defineComponent({
   margin: 15px;
   text-align: center;
   font-size: 17px;
+  padding-left: 5px;
 }
 
 #table4,
@@ -469,6 +440,7 @@ export default defineComponent({
   margin-left: 0px;
   text-align: center;
   font-size: 17px;
+  padding-left: 5px;
 }
 
 .container {
@@ -496,11 +468,11 @@ export default defineComponent({
   font-family: cursive;
   font-weight: bold;
   text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
-  margin-top: 10px;
+}
+#the_task {
   display: flex;
   align-items: center;
   justify-content: center;
-
 }
 
 .description_tabelle {
@@ -553,7 +525,16 @@ justify-content: center;
     margin-top: 0px;
     margin-bottom: 0px;
   }
+  .multi {
+  color: #E6DCF0;
+  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+  font-size: 2em;
+  font-family:'Times New Roman', Times, serif;
+  margin-left: 0px;
+  margin-bottom:14px;
 
+  margin-right:4px;
+}
   #the_task {
     margin: 0px;
   }
@@ -571,10 +552,20 @@ justify-content: center;
   #str9,
   #str10,
   #str11,
-  #str12,
-  #answer {
+  #str12 {
     border: 2px solid var(--borderColor);
     width: 45px;
+    height: 45px;
+    margin: 15px;
+    text-align: center;
+    font-size: 15px;
+    margin-top: -40px;
+
+  }
+
+  #answer {
+    border: 2px solid var(--borderColor);
+    width: 90px;
     height: 45px;
     margin: 15px;
     text-align: center;
