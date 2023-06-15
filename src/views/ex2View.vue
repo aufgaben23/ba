@@ -414,7 +414,10 @@ export default defineComponent({
 
                 LeaderLine.obj.pointAnchor(document.getElementById('plus1' + '' + j), { color: 'red', x: "50%", y: '90%' })
               );
-              
+              // @ts-ignore 
+              secondline.path = "straight";
+                  // @ts-ignore 
+                line.path = "straight";
               this.lines.push(line);
               this.lines.push(secondline);
               //if there's a node hanging
@@ -448,6 +451,9 @@ export default defineComponent({
 
                     LeaderLine.obj.pointAnchor(document.getElementById('plus' + (i + 1) + '' + j), { color: 'red', x: "50%", y: '85%', path: "arc" })
                   );
+                 
+                  // @ts-ignore 
+                line.path = "straight";
                   this.lines.push(line);
 
                 }
@@ -461,10 +467,9 @@ export default defineComponent({
                     LeaderLine.obj.pointAnchor(document.getElementById('plus' + (i + 1) + '' + j), { color: 'red', x: "0%", y: '-15%', path: "arc" })
                   );
 
-
                   // @ts-ignore 
-
-
+                line.path = "straight";
+                  // @ts-ignore 
                   line.color = "green";
                   this.lines.push(line);
 
@@ -481,6 +486,8 @@ export default defineComponent({
 
                     LeaderLine.obj.pointAnchor(document.getElementById('plus' + (i + 1) + '' + j), { color: 'red', x: "50%", y: '85%', path: "arc" })
                   );
+                  // @ts-ignore 
+                line.path = "straight";
                   this.lines.push(line);
 
 
@@ -493,6 +500,8 @@ export default defineComponent({
 
                     LeaderLine.obj.pointAnchor(document.getElementById('plus' + (i + 1) + '' + j), { color: 'red', x: "50%", y: '85%', path: "arc" })
                   );
+                  // @ts-ignore 
+                line.path = "straight";
                   this.lines.push(line);
 
                 }
@@ -509,7 +518,8 @@ export default defineComponent({
                   LeaderLine.obj.pointAnchor(document.getElementById('plus' + (i + 1) + '' + j), { color: 'red', x: "50%", y: '85%', path: "arc" })
 
                 );
-
+                // @ts-ignore 
+                secondline.path = "straight";
                 this.lines.push(secondline);
 
 
@@ -526,6 +536,8 @@ export default defineComponent({
 
                       LeaderLine.obj.pointAnchor(document.getElementById('plus' + (i + 1) + '' + j), { color: 'red', x: "50%", y: '85%', path: "arc" })
                     );
+                    // @ts-ignore 
+                secondline.path = "straight";
                     this.lines.push(secondline);
 
 
@@ -539,6 +551,8 @@ export default defineComponent({
 
                       LeaderLine.obj.pointAnchor(document.getElementById('plus' + (i + 1) + '' + j), { color: 'red', x: "0%", y: '-15%', path: "arc" })
                     );
+                    // @ts-ignore 
+                secondline.path = "straight";
                     this.lines.push(secondline);
                     // @ts-ignore 
 
@@ -556,6 +570,8 @@ export default defineComponent({
 
                       LeaderLine.obj.pointAnchor(document.getElementById('plus' + (i + 1) + '' + j), { color: 'red', x: "50%", y: '85%', path: "arc" })
                     );
+                    // @ts-ignore 
+                secondline.path = "straight";
                     this.lines.push(secondline);
 
 
@@ -570,7 +586,8 @@ export default defineComponent({
                       LeaderLine.obj.pointAnchor(document.getElementById('plus' + (i + 1) + '' + j), { color: 'red', x: "50%", y: '85%', path: "arc" })
                     );
 
-
+                    // @ts-ignore 
+                secondline.path = "straight";
                     this.lines.push(secondline);
 
                   }

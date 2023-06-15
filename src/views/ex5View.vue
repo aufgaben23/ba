@@ -220,15 +220,55 @@ export default defineComponent({
 
         if (this.difficulty == 'easy') {
         //  bordercolor arrs needs to change too if this.number is changed from 4,12 
+        // this.secondnumber = this.getrandomnumber(2, 6);
+
+        // this.number = this.getrandomnumber(4, 7);
+
+        
+
         this.secondnumber = this.getrandomnumber(2, 6);
 
-        this.number = this.getrandomnumber(4, 7);
+        if(this.secondnumber == 2) {
+          this.number = this.getrandomnumber(3, 8);
+        }
+        else if( this.secondnumber == 3) {
+          this.number = this.getrandomnumber(3, 8);
+        }
+        else if (this.secondnumber == 4) {
+          this.number = this.getrandomnumber(3, 6);
+        }
+        else if (this.secondnumber == 5) {
+          this.number = this.getrandomnumber(3, 5);
+        }
+        else if (this.secondnumber == 6){
+          this.number = this.getrandomnumber(3, 5);
+        }
 
       }
       else if (this.difficulty == 'hard') {
-        this.secondnumber = this.getrandomnumber(7, 9);
+        // this.secondnumber = this.getrandomnumber(7, 9);
 
-        this.number = this.getrandomnumber(4, 6);
+        // this.number = this.getrandomnumber(4, 6);
+        this.secondnumber = this.getrandomnumber(4, 9);
+
+        if(this.secondnumber == 4) {
+          this.number = this.getrandomnumber(7, 8);
+        }
+        else if( this.secondnumber == 5) {
+          this.number = this.getrandomnumber(7, 8);
+        }
+        else if (this.secondnumber == 6) {
+          this.number = this.getrandomnumber(6, 7);
+        }
+        else if (this.secondnumber == 7) {
+          this.number = this.getrandomnumber(4, 7);
+        }
+        else if(this.secondnumber == 8) {
+          this.number = this.getrandomnumber(4, 6);
+        }
+        else if(this.secondnumber == 9) {
+          this.number = this.getrandomnumber(4, 6);
+        }
 
       }
       
