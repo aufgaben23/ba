@@ -1563,7 +1563,7 @@ export default defineComponent({
   #quo121,
   #quo123,
   #quo124 {
-    border: 3px solid var(--borderColor);
+    border: 2px solid var(--borderColor);
     width: 40px;
     height: 40px;
     margin: 25px;
@@ -1596,7 +1596,7 @@ export default defineComponent({
   #quo220,
   #quo221,
   #quo224 {
-    border: 3px solid var(--borderColor);
+    border: 2px solid var(--borderColor);
     width: 80px;
     height: 40px;
     margin: 25px;
@@ -1631,7 +1631,7 @@ export default defineComponent({
   #quo321,
   #quo323,
   #quo324 {
-    border: 3px solid var(--borderColor);
+    border: 2px solid var(--borderColor);
 
     width: 40px;
     height: 40px;
@@ -1667,7 +1667,7 @@ export default defineComponent({
   #quo421,
   #quo423,
   #quo424 {
-    border: 3px solid var(--borderColor);
+    border: 2px solid var(--borderColor);
 
 
     width: 40px;
@@ -1704,7 +1704,7 @@ export default defineComponent({
   #quo521,
   #quo523,
   #quo524 {
-    border: 3px solid var(--borderColor);
+    border: 2px solid var(--borderColor);
 
     width: 40px;
     height: 40px;
@@ -1750,7 +1750,7 @@ border: 2px solid var(--borderColor);
   #str219,
   #str220 {
     border: 2px solid var(--borderColor);
-    width: 90px;
+    width: 48px;
     height: 40px;
     margin: 25px;
     margin-bottom: 0px;
@@ -1782,7 +1782,7 @@ border: 2px solid var(--borderColor);
   #str319,
   #str320 {
     border: 2px solid var(--borderColor);
-    width: 90px;
+    width: 70px;
     height: 40px;
     margin: 25px;
     margin-bottom: 0px;
